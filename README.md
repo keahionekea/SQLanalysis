@@ -14,15 +14,25 @@ For this project I will:
 5.) Visualize & record the results with Excel.
 
 Questions we need to answer:
+
 What does the age demographic look like?
+
 What city holds most of these customers?
+
 Where are most of the restaurants located?
+
 What is the top occupation for consumers?
+
 What is the average rating for restaurants by city?
+
 What is the preferred food type for most customers?
+
 What is the most common transportation method for these consumers?
+
 Are these consumers single or married? Do they have children?
+
 Where are most of these consumers located?
+
 Can you find all the information on the top rated restaurants?
 
 Marketing:
