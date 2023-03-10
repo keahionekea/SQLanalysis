@@ -1,4 +1,4 @@
-##Recreates the ratings table with no duplicates
+##After importing all of the data, there is one table that uploaded with duplicates. This query recreates the ratings table with no duplicates
 CREATE OR REPLACE TABLE restaurantproject.ratings_new AS
 SELECT DISTINCT user_ID, overall_rating, restaurant_id, food_rating, service_rating
 FROM `restaurantproject.ratings`;
@@ -34,7 +34,27 @@ WHERE restaurant_id IN (
   FROM `restaurantproject.ratings_new`
 );
 
-### this next query shows where restaurants are located
+—-the next query will average the ratings given for each category of different customers to each restaurant—-
+SELECT  distinct restaurant_id AS restaurant, 
+ROUND(AVG(overall_rating)) AS overall_rating, 
+ROUND(AVG(food_rating)) AS Food, 
+ROUND(AVG(service_rating)) AS service 
+FROM `restaurantreviews-379401.restaurantproject.ratings_new` 
+GROUP BY 1
+ORDER BY 2 DESC, 3 DESC, 4 DESC
+LIMIT 1000
+
+I then created a new table which shows average ratings for each respective category 
+
+##this query examines the relationship between overall rating and the price
+SELECT re.price, av.overall_rating, COUNT(DISTINCT re.Restaurant_ID) AS businesses
+FROM `restaurantreviews-379401.restaurantproject.restaurant` re LEFT JOIN
+`restaurantproject.avg_ratings`av ON re.Restaurant_ID=av.restaurant
+GROUP BY 1, 2
+ORDER BY 1 ASC, 2 DESC
+
+
+### this next query totals restaurants by city
 select count(distinct restaurant_id) as businesses, City
 from `restaurantreviews-379401.restaurantproject.restaurant`
 group by  2
@@ -47,25 +67,6 @@ LEFT JOIN `restaurantproject.avg_ratings` av ON res.Restaurant_ID=av.restaurant
 group by 2,3
 order by 2 desc
 
-—-the next query will average the ratings given for each category of different customers to each restaurant—-
-SELECT  distinct restaurant_id as restaurant, 
-round(avg(overall_rating)) as overall_rating, 
-round(avg(food_rating)) AS Food, 
-round(avg(service_rating))as service 
-FROM `restaurantreviews-379401.restaurantproject.ratings_new` 
-group by 1
-order by 2 Desc, 3 desc, 4 desc
-LIMIT 1000
-
-I then created a new table which shows average ratings for each respective category 
-
-##this query examines the relationship between overall rating and the price
-select re.price, av.overall_rating, count(distinct re.Restaurant_ID) as businesses
-from `restaurantreviews-379401.restaurantproject.restaurant` re left join
-`restaurantproject.avg_ratings`av ON re.Restaurant_ID=av.restaurant
-group by 1, 2
-order by 1 ASC, 2 DESC
-
 ##this finds out what the top food genre is for consumers—-
 SELECT Count (distinct consumer_id) AS amtconsumers, prefered_cuisine 
 FROM `restaurantreviews-379401.restaurantproject.consumer_preference` 
@@ -74,15 +75,15 @@ order by 1 DESC
 LIMIT 1000
 
 ### this next query shows number of consumers by desired cuisine
-select count(distinct consumer_id), prefered_cuisine
-from `restaurantproject.consumer_preference`
-where prefered_cuisine IS NOT NULL
-group by 2
-order by 1 DESC
+SELECT COUNT(DISTINCT consumer_id), prefered_cuisine
+FROM `restaurantproject.consumer_preference`
+WHERE prefered_cuisine IS NOT NULL
+GROUP BY 2
+ORDER BY 1 DESC
 
 
 ##this dispalys the relationship between restaurant rating and cuisine relationship
-SELECT ra.overall_rating, count(distinct cu.restaurant_id) as business, cu.cuisine
+SELECT ra.overall_rating, count(distinct cu.restaurant_id) AS business, cu.cuisine
  FROM `restaurantreviews-379401.restaurantproject.avg_ratings` ra
  LEFT JOIN `restaurantproject.cuisine`cu ON cu.restaurant_id=ra.restaurant
  WHERE cu.cuisine IS NOT NULL
@@ -97,35 +98,38 @@ SELECT rat.restaurant, rat.overall_rating,rat.food, rat.service, res.name, res.c
 FROM`restaurantproject.avg_ratings` rat LEFT JOIN 
 `restaurantreviews-379401.restaurantproject.restaurant` res ON rat.restaurant=res.Restaurant_ID 
 LEFT JOIN `restaurantproject.cuisine` cui ON cui.Restaurant_ID=res.Restaurant_ID
+WHERE cuI.cuisine IS NOT NULL
 ORDER BY 2 desc, 3 desc, 4 desc
 LIMIT 10
 
-##this query will do something very similar but with the worst rated restaurants–
+##this query will do something very similar but with the worst rated restaurants
 SELECT rat.restaurant, rat.overall_rating,rat.food, rat.service, res.name, res.city, cui.cuisine, res.price
 FROM`restaurantproject.avg_ratings` rat LEFT JOIN 
-`restaurantreviews-379401.restaurantproject.restaurant` res ON rat.restaurant=res.Restaurant_ID LEFT JOIN 
-`restaurantproject.cuisine` cui ON cui.Restaurant_ID=res.Restaurant_ID
+`restaurantreviews-379401.restaurantproject.restaurant` res ON rat.restaurant=res.Restaurant_ID 
+LEFT JOIN `restaurantproject.cuisine` cui ON cui.Restaurant_ID=res.Restaurant_ID
+WHERE cuI.cuisine IS NOT NULL
 ORDER BY 2 ASC, 3 ASC, 4 ASC
 LIMIT 10
 
-##this next query shows the top demographic of consumers by age
-select count(distinct consumer_id) as people, age
-from `restaurantproject.consumers`
-group by  2
-order by people DESC
+
+##this next query shows totals consumers by age
+SELECT COUNT(DISTINCT consumer_id) AS people, age
+FROM `restaurantproject.consumers`
+GROUP BY  2
+ORDER BY people DESC
 
 
-### this next query shows the top demographic of consumers occupation
-select count(distinct consumer_id) as people, occupation
-from `restaurantproject.consumers`
-group by  2
-order by people DESC
+### this next query totals consumers by occupation
+SELECT COUNT(DISTINCT consumer_id) AS people, occupation
+FROM `restaurantproject.consumers`
+GROUP BY  2
+ORDER BY people DESC
 
-### this next query shows where consumers are located
-select count(distinct consumer_id) as people, city
-from `restaurantproject.consumers`
-group by  2
-order by people DESC
+### this next query shows total consumers by city
+SELECT COUNT(DISTNICT consumer_id) as people, city
+FROM `restaurantproject.consumers`
+GROUP BY  2
+ORDER BY people DESC
 
 ##marital status of consumers
 SELECT Marital_Status, COUNT(DISTINCT Consumer_ID) AS people
@@ -144,23 +148,23 @@ ORDER BY 2 DESC
 LIMIT 1000
 
 ##top occupation(student) and their preferred cuisine-
-select count(distinct con.consumer_id) as people, pref.prefered_cuisine, con.occupation
-from `restaurantproject.consumers` con left join `restaurantproject.consumer_preference` pref
+SELECT COUNT(DISTINCT con.consumer_id) AS people, pref.prefered_cuisine, con.occupation
+FROM `restaurantproject.consumers` con LEFT JOIN `restaurantproject.consumer_preference` pref
 ON con.Consumer_ID=pref.consumer_id
-group by 2,3
-order by 1 DESC
-limit 10
+GROUP BY 2,3
+ORDER BY 1 DESC
+LIMIT 10
 
 ### this next query shows how consumers travel
-select count(distinct consumer_id) as people, Transportation_Method
-from `restaurantproject.consumers`
-group by  2
-order by people DESC
+SELECT COUNT(DISTINCT consumer_id) AS people, Transportation_Method
+FROM `restaurantproject.consumers`
+GROUP BY  2
+ORDER BY people DESC
 
 ##What type of food restaurants are serving
-SELECT count(distinct Restaurant_ID) as restaurant, Cuisine
+SELECT COUNT(DISTINCT Restaurant_ID) AS restaurant, Cuisine
 FROM `restaurantreviews-379401.restaurantproject.cuisine` 
-group by 2  
-order by 1 DESC
+GROUP BY 2  
+ORDER BY 1 DESC
 
 
