@@ -1,7 +1,5 @@
 # SQLanalysis
-The Scenario:
 
-I have been given a dataset on a new up and coming business that wants to understand the demographic of restaurant consumers in Mexico. They are opening a franchise in several different cities, and have given me access to a database on consumer & restaurant information in Mexico. They have asked me to answer several questions with this dataset and want it done by the end of the day. Down below contains a list of questions for this scenario. 
 
 For this project I will:
 
@@ -12,6 +10,12 @@ For this project I will:
 4.) Use SQL to pull information from the database
 
 5.) Visualize & record the results with Excel.
+
+
+The Scenario:
+
+I have been given a dataset on a new up and coming business that wants to understand the demographic of restaurant consumers in Mexico. They are opening a franchise in several different cities, and have given me access to a database on consumer & restaurant information in Mexico. They have asked me to answer several questions with this dataset and want it done by the end of the day. Down below contains a list of questions for this scenario. 
+
 
 Questions we need to answer:
 
