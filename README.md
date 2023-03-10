@@ -5,11 +5,11 @@ For this project I will:
 
 1.) Create a dataset on BigQuery 
 
-3.) Create a schema to blueprint the relation between tables
+2.) Create a schema to blueprint the relation between tables
 
-4.) Use SQL to pull information from the database
+3.) Use SQL to pull information from the database
 
-5.) Visualize & record the results with Excel.
+4.) Visualize & record the results with Excel.
 
 
 The Scenario:
