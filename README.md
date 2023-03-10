@@ -18,25 +18,27 @@ I have been given a dataset on a new up and coming business that wants to unders
 
 Questions we need to answer:
 
-What does the age demographic look like?
+1.) What does the age demographic look like?
 
-What city holds most of these customers?
+2.) What city holds most of these customers?
 
-Where are most of the restaurants located?
+3.) Where are most of the restaurants located?
 
-What is the top occupation for consumers?
+4.) What is the top occupation for consumers?
 
-What is the average rating for restaurants by city?
+5.) What is the average rating for restaurants by city?
 
-What is the preferred food type for most customers?
+6.) What is the preferred food type for most customers?
 
-What is the most common transportation method for these consumers?
+7.) What is the most common transportation method for these consumers?
 
-Are these consumers single or married? Do they have children?
+8.) Are these consumers single or married? Do they have children?
 
-Where are most of these consumers located?
+9.) Where are most of these consumers located?
 
-Can you find all the information on the top rated restaurants?
+10.) Can you find all the information on the top rated restaurants?
+
+11.) What types of food are restaurants serving?
 
 Marketing:
 All of these questions will help for future marketing strategies. Answering these questions will help  understand the characteristics of consumers based on age, city, occupation, and the in-demand food type. Finding the common age group will help with comprehending the culture and the approach of marketing. Understanding the city of consumers will give a better idea of where to market. The occupation of consumers can assist to recognizing the culture of people we are marketing to (Are they students? Young adults working? Middle aged adults?). Insight on their form of transportation will give judgement on possible marketing ideas (i.e. advertisng in terminals). 
